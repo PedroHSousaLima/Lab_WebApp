@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignora todos os .db, exceto este
+*.db
+!Dados/dados.db
+!Dados/boss.db
