@@ -4,7 +4,7 @@ import os
 
 # === Caminhos base ===
 BASE_DIR = os.path.dirname(__file__)
-DB_PATH = os.path.join(BASE_DIR, 'boss.db')
+DB_PATH = os.path.join(BASE_DIR, 'dados.db')
 CSV_PATH = os.path.join(BASE_DIR, 'elden_ring_boss_list.csv')
 
 
