@@ -6,6 +6,8 @@ import sys
 import matplotlib.pyplot as plt
 import plotly.express as px
 import plotly.graph_objects as go
+from matplotlib import cm
+import matplotlib.colors as mcolors
 
 
 # === Caminhos ===
@@ -21,6 +23,45 @@ from db_boss_lvl import criar_tabela_boss_lvl, listar_boss_levels
 criar_tabela_boss_lvl()
 
 # === Funções auxiliares ===
+def sincronizar_jornada_com_bosses():
+    with sqlite3.connect(DB_PATH) as conn:
+        jornada = pd.read_sql_query("SELECT * FROM jornada", conn)
+        bosses = pd.read_sql_query("SELECT * FROM bosses", conn)
+
+    # Criar chave única para identificar cada boss
+    jornada["chave"] = (jornada["localidade"].str.strip() + jornada["nome"].str.strip()).str.lower()
+    bosses["chave"] = (bosses["localidade"].str.strip() + bosses["nome"].str.strip()).str.lower()
+
+    # Mesclar mantendo o id da jornada e os campos que não serão sobrescritos
+    atualizada = pd.merge(
+        jornada[["id", "chave", "personagem", "status_boss"]],
+        bosses.drop(columns=["id"]),
+        on="chave",
+        how="left",
+        suffixes=("", "_boss")
+    )
+
+    # Reorganizar as colunas
+    atualizada = atualizada[[
+        "id", "personagem", "nome", "localidade", "location",
+        "runes", "loot", "stance", "tipo_dano_pref", "resistencia", "status_boss"
+    ]]
+
+    # Atualizar os registros na tabela jornada
+    with sqlite3.connect(DB_PATH) as conn:
+        for _, row in atualizada.iterrows():
+            conn.execute("""
+                UPDATE jornada
+                SET nome = ?, localidade = ?, location = ?, runes = ?, loot = ?,
+                    stance = ?, tipo_dano_pref = ?, resistencia = ?
+                WHERE id = ?
+            """, (
+                row["nome"], row["localidade"], row["location"], row["runes"],
+                row["loot"], row["stance"], row["tipo_dano_pref"],
+                row["resistencia"], row["id"]
+            ))
+        conn.commit()
+
 def obter_jogadores():
     with sqlite3.connect(DB_PATH) as conn:
         return pd.read_sql_query("SELECT id, nome_jogador, nome_personagem FROM jogadores_personagens", conn)
@@ -62,7 +103,7 @@ def criar_ou_atualizar_jornada(nome_personagem, df_bosses):
         registros = cursor.fetchone()[0]
 
         if registros == 0:
-            df_bosses.to_sql("jornada", conn, if_exists="append", index=False)
+            df_bosses.drop(columns=["id"], errors="ignore").to_sql("jornada", conn, if_exists="append", index=False)
 
 def obter_total_bosses_distintos():
     with sqlite3.connect(DB_PATH) as conn:
@@ -81,9 +122,11 @@ else:
     personagem_escolhido = st.selectbox("🎮 Escolha seu personagem", personagens)
 
     if personagem_escolhido:
+        sincronizar_jornada_com_bosses()
         df_bosses_lvl = obter_bosses_com_level()
         criar_ou_atualizar_jornada(personagem_escolhido, df_bosses_lvl)
         st.success(f"Jornada ativa para: {personagem_escolhido}")
+
 
         # === Métricas ===
         col1, col2, col3 = st.columns(3)
@@ -254,19 +297,126 @@ else:
         else:
             st.info("📊 Nenhuma localidade com dados suficientes para o gráfico de barras verticais.")
 
+        # === Gráfico de Boss por runas ===
+        st.markdown("### 💰 Bosses por Quantidade de Runas")
 
-
-        # === Tabela de progresso ===
-        st.subheader(f"📋 Progresso de {personagem_escolhido}")
+        # === Obtem localidades com level_ord para ordenação ===
         with sqlite3.connect(DB_PATH) as conn:
-            df_jornada = pd.read_sql_query(
-                "SELECT * FROM jornada WHERE personagem = ?", conn, params=(personagem_escolhido,)
+            localidades_df = pd.read_sql_query("""
+                SELECT DISTINCT j.localidade, bl.level
+                FROM jornada j
+                LEFT JOIN boss_levels bl
+                    ON LOWER(TRIM(j.localidade)) = LOWER(TRIM(bl.localidade))
+                WHERE j.personagem = ?
+            """, conn, params=(personagem_escolhido,))
+
+        # Extrai número de ordem (os dois primeiros dígitos) do level
+        localidades_df["level_ord"] = localidades_df["level"].str.extract(r"^(\d+)").astype(float)
+
+        # Ordena as localidades pela ordem do level
+        localidades_ordenadas = (
+            localidades_df.sort_values(by="level_ord", na_position="last")["localidade"]
+            .dropna()
+            .drop_duplicates()
+            .tolist()
+        )
+
+        # === Filtro ordenado ===
+        localidade_escolhida = st.selectbox("📍 Filtrar por Localidade", localidades_ordenadas, key="filtro_localidade_runas")
+
+        # === Consulta bosses da localidade com runas ===
+        with sqlite3.connect(DB_PATH) as conn:
+            df_runas = pd.read_sql_query("""
+                SELECT nome, runes
+                FROM jornada
+                WHERE personagem = ? AND localidade = ?
+            """, conn, params=(personagem_escolhido, localidade_escolhida))
+
+        df_runas = df_runas.dropna(subset=["runes"]).sort_values(by="runes", ascending=False)
+
+        if not df_runas.empty:
+            fig4 = px.bar(
+                df_runas,
+                x="nome",
+                y="runes",
+                text="runes",
+                title=f"💰 Bosses em {localidade_escolhida} - Runas",
+                labels={"nome": "Boss", "runes": "Quantidade de Runas"},
+                color_discrete_sequence=["#EBA300"]
             )
-        st.dataframe(df_jornada, use_container_width=True)
+
+            fig4.update_traces(
+                hovertemplate="Boss: %{x}<br>Runas: %{y}<extra></extra>",
+                textposition="outside"
+            )
+            fig4.update_layout(
+                yaxis=dict(range=[0, df_runas["runes"].max() * 1.1]),
+                xaxis_tickangle=-45,
+                xaxis_title="Boss",
+                yaxis_title="Runas",
+                height=500
+            )
+
+            st.plotly_chart(fig4, use_container_width=True)
+        else:
+            st.info("📉 Nenhum dado de runas para essa localidade.")
+
+
+        # === Tabela de progresso ===    
+ 
+        st.subheader(f"📋 Progresso de {personagem_escolhido} (Vivos ordenados por Level e Runas)")
+
+        # === Carrega e filtra ===
+        with sqlite3.connect(DB_PATH) as conn:
+            df_jornada = pd.read_sql_query("""
+                SELECT * FROM jornada
+                WHERE personagem = ? AND status_boss = 'Vivo'
+            """, conn, params=(personagem_escolhido,))
+
+        # Verifica se 'localidade' está presente
+        if "localidade" not in df_jornada.columns:
+            st.warning("⚠️ A coluna 'localidade' não está presente na jornada.")
+            st.stop()
+
+        # Ordena por level e runes
+        df_jornada["level_ord"] = df_jornada["level"].str.extract(r"^(\d{2})").astype(float)
+        df_jornada = df_jornada.sort_values(by=["level_ord", "runes"], ascending=[True, True])
+        df_jornada.drop(columns=["id", "level_ord"], errors="ignore", inplace=True)
+        df_jornada.reset_index(drop=True, inplace=True)
+
+        # === Estilo com gradiente por localidade ===
+        from matplotlib import cm
+        import matplotlib.colors as mcolors
+
+        def cor_por_runes(runes, localidade):
+            grupo = df_jornada[df_jornada["localidade"] == localidade]
+            min_r = grupo["runes"].min()
+            max_r = grupo["runes"].max()
+            if pd.isna(runes) or max_r == min_r:
+                return ""
+            norm = (runes - min_r) / (max_r - min_r)
+            rgba = cm.get_cmap("RdYlGn_r")(norm)  # verde (baixo) a vermelho (alto)
+            hex_color = mcolors.to_hex(rgba)
+            return f"background-color: {hex_color}; color: black"
+
+        # Aplica gradiente nas colunas 'nome' e 'runes' com base nas runas por localidade
+        styled_df = df_jornada.style.apply(
+            lambda row: pd.Series({
+                "nome": cor_por_runes(row["runes"], row["localidade"]),
+                "runes": cor_por_runes(row["runes"], row["localidade"])
+            }),
+            axis=1
+        )
+
+        st.dataframe(styled_df, use_container_width=True)
+
+
+
 
         # === Formulário para atualização ===
         st.markdown("---")
         st.subheader("🔪 Atualizar Progresso de Bosses")
+        st.text("Clique em Confirmar para aplicar filtro e salvar alteração.")
 
         with sqlite3.connect(DB_PATH) as conn:
             df_jornada_vivos = pd.read_sql_query("""
@@ -304,6 +454,7 @@ else:
                     confirmacao = st.radio("Boss foi exterminado?", ["Não", "Sim"], horizontal=True)
 
                     if st.form_submit_button("✅ Confirmar") and confirmacao == "Sim":
+                        
                         with sqlite3.connect(DB_PATH) as conn:
                             if nome_boss_escolhido == "Todos os Boss da Localidade":
                                 ids_para_atualizar = df_filtrado["id"].tolist()

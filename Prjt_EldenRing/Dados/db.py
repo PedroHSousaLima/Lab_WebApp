@@ -51,3 +51,11 @@ def excluir_jogador(id):
         cursor = conn.cursor()
         cursor.execute("DELETE FROM jogadores_personagens WHERE id = ?", (id,))
         conn.commit()
+
+# Obter lista de personagens (retorna apenas os nomes dos personagens únicos)
+def obter_personagens():
+    with sqlite3.connect(DB_PATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT DISTINCT nome_personagem FROM jogadores_personagens")
+        personagens = cursor.fetchall()
+        return [p[0] for p in personagens]
