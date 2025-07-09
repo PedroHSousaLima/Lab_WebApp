@@ -1,9 +1,21 @@
+# Ignora o ambiente virtual
 .venv/
-__pycache__/
-*.pyc
-*.pyo
 
-# Ignora todos os .db, exceto este
+# Ignora arquivos de cache do Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Ignora notebooks temporários do Jupyter, se aplicável
+.ipynb_checkpoints/
+
+# Ignora todos os arquivos .db por padrão...
 *.db
+
+# ... exceto os bancos de dados que devem ser versionados
 !Dados/dados.db
-!Dados/boss.db
+
+# Ignore arquivos temporários de sistema operacional
+.DS_Store
+Thumbs.db
