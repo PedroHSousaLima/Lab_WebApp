@@ -29,7 +29,7 @@ def set_bg_from_local(relative_path):
 
 
 # === Aplicar imagem de fundo ===
-set_bg_from_local("assets/home_background.jpg")
+set_bg_from_local("../assets/home_background.jpg")
 
 # === Conteúdo da Home ===
 st.title("🏰 Elden Ring - Dashboard de Progresso")

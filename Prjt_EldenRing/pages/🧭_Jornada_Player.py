@@ -15,7 +15,17 @@ from matplotlib import cm
 import plotly.express as px
 import plotly.graph_objects as go
 
+# --- Início da Lógica de Controle de Acesso (ADICIONADO) ---
+# Certifica-se que 'autenticado' está no session_state para evitar erros
+if 'autenticado' not in st.session_state:
+    st.session_state['autenticado'] = False
 
+# Se o usuário NÃO ESTIVER AUTENTICADO, exibe aviso e interrompe
+if not st.session_state['autenticado']:
+    st.warning("⚠️ Você precisa fazer login para acessar esta página.")
+    st.info("Por favor, retorne à página inicial para fazer login.")
+    st.stop() # Interrompe a execução do resto do script da página
+# --- Fim da Lógica de Controle de Acesso ---
 
 # === Caminhos ===
 BASE_DIR = os.path.dirname(__file__)

@@ -5,6 +5,18 @@ import base64
 import pandas as pd
 from pathlib import Path
 
+# Verifica se o usuário está autenticado e tem login válido
+if 'autenticado' not in st.session_state:
+    st.session_state['autenticado'] = False
+if 'usuario_logado' not in st.session_state:
+    st.session_state['usuario_logado'] = None
+
+if not st.session_state['autenticado'] or not st.session_state['usuario_logado']:
+    st.warning("⚠️ Você precisa fazer login para acessar esta página.")
+    st.info("Por favor, retorne à página inicial para fazer login.")
+    st.stop()
+
+
 # === Caminhos Absolutos ===
 # Garante compatibilidade multiplataforma e ao mover para produção
 caminho_atual = Path(__file__).resolve().parent
@@ -66,25 +78,26 @@ with st.form("form_cadastro"):
 
     if submitted:
         if nome_jogador.strip() and nome_personagem.strip():
-            inserir_jogador(nome_jogador.strip(), nome_personagem.strip())
+            inserir_jogador(nome_jogador.strip(), nome_personagem.strip(), st.session_state['usuario_logado'])
             st.success("Cadastro realizado com sucesso!")
             st.rerun()
         else:
             st.warning("Preencha todos os campos.")
 
+
 # === Interface de edição agrupada ===
 with st.expander("🛠 Clique aqui para editar ou excluir um jogador"):
-    dados = listar_jogadores()
+    dados_finais = listar_jogadores(st.session_state['usuario_logado'])
     
-    if not dados:
+    if not dados_finais:
         st.info("Nenhum jogador cadastrado.")
     else:
-        jogadores_dict = {f"{j[1]} - {j[2]}": j[0] for j in dados}  # Ex: "João - Guerreiro": id
+        jogadores_dict = {f"{j[1]} - {j[2]}": j[0] for j in dados_finais}  # Ex: "João - Guerreiro": id
         selecionado = st.selectbox("Selecione um jogador para editar:", list(jogadores_dict.keys()))
 
         if selecionado:
             id_jogador = jogadores_dict[selecionado]
-            jogador = next(j for j in dados if j[0] == id_jogador)
+            jogador = next(j for j in dados_finais if j[0] == id_jogador)
 
             with st.form("form_edit_unico"):
                 novo_nome = st.text_input("Nome do Jogador", value=jogador[1])
@@ -97,18 +110,20 @@ with st.expander("🛠 Clique aqui para editar ou excluir um jogador"):
                     excluir = st.form_submit_button("🗑️ Excluir Jogador")
 
                 if salvar:
-                    atualizar_jogador(id_jogador, novo_nome.strip(), novo_personagem.strip())
+                    atualizar_jogador(id_jogador, novo_nome.strip(), novo_personagem.strip(), st.session_state['usuario_logado'])
                     st.success("Alterações salvas com sucesso.")
                     st.rerun()
 
+
                 if excluir:
-                    excluir_jogador(id_jogador)
+                    excluir_jogador(id_jogador, st.session_state['usuario_logado'])
                     st.success("Jogador excluído com sucesso.")
                     st.rerun()
 
+
 # === Visualização geral atualizada ===
 st.subheader("📊 Visualização Geral da Tabela")
-dados_finais = listar_jogadores()
+dados_finais = listar_jogadores(st.session_state['usuario_logado'])
 
 if dados_finais:
     df = pd.DataFrame(dados_finais, columns=["ID", "Nome do Jogador", "Nome do Personagem"])
