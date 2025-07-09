@@ -58,3 +58,13 @@ Acompanhe seu progresso, veja o que já conquistou e compare com seus outros per
 
 🛡️ **Prepare-se, Tarnished.** Este é o seu novo ponto de partida para explorar *Elden Ring* com profundidade, clareza e muita personalidade.
 """)
+
+# === Vídeos recomendados ===
+st.subheader("📺 Vídeos Recomendados")
+
+col1, col2 = st.columns(2)
+with col1:
+    st.video("https://www.youtube.com/watch?v=WofIuNn9Exc&ab_channel=LardosGames")
+with col2:
+    st.video("https://youtu.be/6v7TbpHGc8U")
+
