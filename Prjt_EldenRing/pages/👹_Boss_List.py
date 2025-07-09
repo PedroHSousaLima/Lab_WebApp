@@ -2,8 +2,11 @@ import streamlit as st
 import pandas as pd
 import os
 import sys
+import base64
+from pathlib import Path
 
 # === Adiciona caminho do módulo db_boss.py ===
+caminho_atual = Path(__file__).resolve().parent
 CAMINHO_DADOS = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'Dados'))
 if CAMINHO_DADOS not in sys.path:
     sys.path.append(CAMINHO_DADOS)
@@ -12,6 +15,34 @@ from db_boss import criar_tabela_boss, listar_bosses, atualizar_boss
 
 # === Inicializa banco e tabela ===
 criar_tabela_boss()
+
+# === Configuração da Página ===
+st.set_page_config(page_title="Elden Ring - Home", layout="wide")
+
+# === Função para definir imagem de fundo com escurecimento ===
+def set_bg_from_local(relative_path):
+    image_file = caminho_atual / relative_path
+    if image_file.exists():
+        with open(image_file, "rb") as file:
+            encoded = base64.b64encode(file.read()).decode()
+        css = f"""
+        <style>
+        .stApp {{
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+                url("data:image/jpg;base64,{encoded}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }}
+        </style>
+        """
+        st.markdown(css, unsafe_allow_html=True)
+    else:
+        st.warning(f"⚠️ Imagem de fundo não encontrada: {image_file}")
+
+# === Aplica fundo ===
+set_bg_from_local("../assets/boss_background.jpg")
 
 # === Título da página ===
 st.title("👹 Lista de Bosses")

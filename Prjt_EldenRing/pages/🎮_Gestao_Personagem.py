@@ -1,18 +1,20 @@
 import os
 import sys
 import streamlit as st
+import base64
 import pandas as pd
+from pathlib import Path
 
-# === Caminho absoluto para a pasta 'Dados' (onde está o db.py e o dados.db) ===
-# Isso garante compatibilidade ao rodar de qualquer lugar
-CAMINHO_ATUAL = os.path.dirname(__file__)
-CAMINHO_DADOS = os.path.abspath(os.path.join(CAMINHO_ATUAL, "..", "Dados"))
+# === Caminhos Absolutos ===
+# Garante compatibilidade multiplataforma e ao mover para produção
+caminho_atual = Path(__file__).resolve().parent
+caminho_dados = caminho_atual.parent / "Dados"
 
-# Adiciona a pasta Dados ao sys.path para importar db.py corretamente
-if CAMINHO_DADOS not in sys.path:
-    sys.path.append(CAMINHO_DADOS)
+# Adiciona a pasta Dados ao sys.path para importar módulos
+if str(caminho_dados) not in sys.path:
+    sys.path.append(str(caminho_dados))
 
-# === Importa funções do db.py ===
+# === Importações de banco ===
 from db import (
     criar_tabela,
     inserir_jogador,
@@ -21,9 +23,38 @@ from db import (
     excluir_jogador
 )
 
-# === Garante que a tabela exista ===
+# === Inicializa banco de dados se necessário ===
 criar_tabela()
 
+# === Configuração da Página ===
+st.set_page_config(page_title="Elden Ring - Home", layout="wide")
+
+# === Função para definir imagem de fundo com escurecimento ===
+def set_bg_from_local(relative_path):
+    image_file = caminho_atual / relative_path
+    if image_file.exists():
+        with open(image_file, "rb") as file:
+            encoded = base64.b64encode(file.read()).decode()
+        css = f"""
+        <style>
+        .stApp {{
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+                url("data:image/jpg;base64,{encoded}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }}
+        </style>
+        """
+        st.markdown(css, unsafe_allow_html=True)
+    else:
+        st.warning(f"⚠️ Imagem de fundo não encontrada: {image_file}")
+
+# === Aplica fundo ===
+set_bg_from_local("../assets/gp_background.jpg")
+
+# === Título da Página ===
 st.title("🎮 Gerenciar Jogador e Personagem")
 
 # === Formulário de Cadastro ===

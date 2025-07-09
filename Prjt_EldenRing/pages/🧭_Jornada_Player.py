@@ -8,6 +8,8 @@ import plotly.express as px
 import plotly.graph_objects as go
 from matplotlib import cm
 import matplotlib.colors as mcolors
+import base64
+from pathlib import Path
 
 
 # === Caminhos ===
@@ -109,6 +111,34 @@ def obter_total_bosses_distintos():
     with sqlite3.connect(DB_PATH) as conn:
         df = pd.read_sql_query("SELECT DISTINCT localidade || nome AS chave FROM bosses", conn)
         return df["chave"].nunique()
+
+# === Fundo ===
+
+# === Função para definir imagem de fundo com escurecimento ===
+caminho_atual = Path(__file__).resolve().parent
+def set_bg_from_local(relative_path):
+    image_file = caminho_atual / relative_path
+    if image_file.exists():
+        with open(image_file, "rb") as file:
+            encoded = base64.b64encode(file.read()).decode()
+        css = f"""
+        <style>
+        .stApp {{
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url("data:image/jpg;base64,{encoded}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }}
+        </style>
+        """
+        st.markdown(css, unsafe_allow_html=True)
+    else:
+        st.warning(f"⚠️ Imagem de fundo não encontrada: {image_file}")
+
+# === Aplica fundo ===
+set_bg_from_local("../assets/jrnd_background.jpg")
 
 # === Interface Streamlit ===
 st.title("🧭 Jornada do Personagem")

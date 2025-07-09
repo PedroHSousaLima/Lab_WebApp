@@ -1,5 +1,8 @@
 import streamlit as st
 import pandas as pd
+import base64
+from pathlib import Path
+
 from db_build import (
     criar_tabela_build,
     inicializar_build_para_personagem,
@@ -9,6 +12,37 @@ from db_build import (
 from db import obter_personagens
 from db_weapon import criar_tabela_weapons, obter_weapons
 from db_build_weapon import criar_tabela_build_weapon, salvar_build_weapon, carregar_build_weapon
+
+# === Fundo ===
+# === Configuração da Página ===
+st.set_page_config(page_title="Elden Ring - Home", layout="wide")
+
+# === Função para definir imagem de fundo com escurecimento ===
+caminho_atual = Path(__file__).resolve().parent
+def set_bg_from_local(relative_path):
+    image_file = caminho_atual / relative_path
+    if image_file.exists():
+        with open(image_file, "rb") as file:
+            encoded = base64.b64encode(file.read()).decode()
+        css = f"""
+        <style>
+        .stApp {{
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
+                url("data:image/jpg;base64,{encoded}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }}
+        </style>
+        """
+        st.markdown(css, unsafe_allow_html=True)
+    else:
+        st.warning(f"⚠️ Imagem de fundo não encontrada: {image_file}")
+
+# === Aplica fundo ===
+set_bg_from_local("../assets/build_background.jpg")
+
 
 # === Configuração da Página ===
 st.set_page_config(page_title="🔧 Build do Personagem", layout="wide")
