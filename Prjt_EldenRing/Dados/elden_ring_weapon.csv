@@ -1,134 +1,145 @@
 tipo_arma,nome_arma,vigor,mente,vitalidade,força,destreza,inteligência,fé,arcano
-Cajado,Academy Glintstone Staff,0,0,0,6,0,28,0,0
+🪄 Cajado,Academy Glintstone Staff,0,0,0,6,0,28,0,0
 Catalisador,Academy Glintstone Staff,0,0,0,6,0,28,0,0
-Cajado,Azur's Glintstone Staff,0,0,0,10,0,52,0,0
+🪄 Cajado,Azur's Glintstone Staff,0,0,0,10,0,52,0,0
 Catalisador,Azur's Glintstone Staff,0,0,0,10,0,52,0,0
-Milagre,Beast Claw,0,0,0,0,0,0,0,8
-Escudo,Beast Crest Heater Shield,0,0,0,10,0,0,0,0
-Milagre,Bestial Sling,0,0,0,0,0,0,0,10
-Arco,Black Bow,0,0,0,9,20,0,0,0
-Milagre,Black Flame,0,0,0,0,0,0,20,0
-Adaga,Black Knife,0,0,0,8,12,18,0,0
-Milagre,Blessing of the Erdtree,0,0,0,0,0,0,38,0
+🙏🏻 Milagre,Beast Claw,0,0,0,0,0,0,0,8
+🛡️ Escudo,Beast Crest Heater Shield,0,0,0,10,0,0,0,0
+🙏🏻 Milagre,Bestial Sling,0,0,0,0,0,0,0,10
+🏹 Arco,Black Bow,0,0,0,9,20,0,0,0
+🙏🏻 Milagre,Black Flame,0,0,0,0,0,0,20,0
+🔪 Adaga,Black Knife,0,0,0,8,12,18,0,0
+🙏🏻 Milagre,Blessing of the Erdtree,0,0,0,0,0,0,38,0
 Garra,Bloodhound Claws,0,0,0,10,15,0,0,0
-Adaga,Bloodstained Dagger,0,0,0,9,12,0,0,0
-Escudo,Brass Shield,0,0,0,16,7,0,0,0
-Espada Curta,Broadsword,0,0,0,10,10,0,0,0
-Punho,Caestus,0,0,0,8,8,0,0,0
-Feitiço,Ancient Death Hex,0,0,0,0,0,38,0,17
-Cajado,Carian Glintblade Staff,0,0,0,6,0,22,0,0
+🔪 Adaga,Bloodstained Dagger,0,0,0,9,12,0,0,0
+🛡️ Escudo,Brass Shield,0,0,0,16,7,0,0,0
+⚔️ Espada Curta,Broadsword,0,0,0,10,10,0,0,0
+🤜🏻 Punho,Caestus,0,0,0,8,8,0,0,0
+🧙🏻 Feitiço,Ancient Death Hex,0,0,0,0,0,38,0,17
+🪄 Cajado,Carian Glintblade Staff,0,0,0,6,0,22,0,0
 Catalisador,Carian Glintblade Staff,0,0,0,6,0,22,0,0
-Feitiço,Ancient Death Rancor,0,0,0,0,0,34,24,0
-Escudo,Carian Knight's Shield,0,0,0,10,10,15,0,0
-Espada Curta,Carian Knight's Sword,0,0,0,10,10,18,0,0
-Cajado,Carian Regal Scepter,0,0,0,8,0,60,0,0
-Adaga,Celebrant's Sickle,0,0,0,6,11,0,0,0
-Punho,Cipher Pata,0,0,0,0,0,0,30,0
+🧙🏻 Feitiço,Ancient Death Rancor,0,0,0,0,0,34,24,0
+🛡️ Escudo,Carian Knight's Shield,0,0,0,10,10,15,0,0
+⚔️ Espada Curta,Carian Knight's Sword,0,0,0,10,10,18,0,0
+🪄 Cajado,Carian Regal Scepter,0,0,0,8,0,60,0,0
+🔪 Adaga,Celebrant's Sickle,0,0,0,6,11,0,0,0
+🤜🏻 Punho,Cipher Pata,0,0,0,0,0,0,30,0
 Catalisador,Clawmark Seal,0,0,0,4,0,0,10,0
-Lança,Cleanrot Spear,0,0,0,16,20,0,20,0
-Escudo,Coil Shield,0,0,0,10,10,0,0,0
-Feitiço,Cannon of Haima,0,0,0,0,0,25,0,0
-Besta,Crepus's Black-Key Crossbow,0,0,0,14,16,0,0,0
-Lança,Cross-Naginata,0,0,0,16,20,0,0,0
-Adaga,Crystal Knife,0,0,0,8,12,9,0,0
-Lança,Crystal Spear,0,0,0,12,18,16,0,0
-Espada Curta,Crystal Sword,0,0,0,13,10,15,0,0
-Adaga,Dagger,0,0,0,5,9,0,0,0
-Lança,Death Ritual Spear,0,0,0,14,20,18,0,0
-Cajado,Demi-Human Queen's Staff,0,0,0,6,0,10,0,0
+✏️ Lança,Cleanrot Spear,0,0,0,16,20,0,20,0
+🛡️ Escudo,Coil Shield,0,0,0,10,10,0,0,0
+🧙🏻 Feitiço,Cannon of Haima,0,0,0,0,0,25,0,0
+🏹 Besta,Crepus's Black-Key Crossbow,0,0,0,14,16,0,0,0
+✏️ Lança,Cross-Naginata,0,0,0,16,20,0,0,0
+🔪 Adaga,Crystal Knife,0,0,0,8,12,9,0,0
+✏️ Lança,Crystal Spear,0,0,0,12,18,16,0,0
+⚔️ Espada Curta,Crystal Sword,0,0,0,13,10,15,0,0
+🔪 Adaga,Dagger,0,0,0,5,9,0,0,0
+✏️ Lança,Death Ritual Spear,0,0,0,14,20,18,0,0
+🪄 Cajado,Demi-Human Queen's Staff,0,0,0,6,0,10,0,0
 Catalisador,Demi-Human Queen's Staff,0,0,0,6,0,10,0,0
 Catalisador,Dragon Communion Seal,0,0,0,10,0,0,0,10
-Espada Colossal,Dragon Slayer's Cragblade,0,0,0,40,15,0,0,0
-Escudo,Dragonclaw Shield,0,0,0,30,8,0,0,0
-Milagre,Dragonfire,0,0,0,0,0,0,15,12
-Katana,Dragonscale Blade,0,0,0,12,20,0,20,0
-Espada Curta,Erdsteel Dagger,0,0,0,7,12,0,14,0
-Arco,Erdtree Bow,0,0,0,8,12,0,14,0
-Escudo,Erdtree Greatshield,0,0,0,30,12,0,14,0
-Milagre,Erdtree Heal,0,0,0,0,0,0,42,0
+⚔️ Espada Colossal,Dragon Slayer's Cragblade,0,0,0,40,15,0,0,0
+🛡️ Escudo,Dragonclaw Shield,0,0,0,30,8,0,0,0
+🙏🏻 Milagre,Dragonfire,0,0,0,0,0,0,15,12
+⚔️ Katana,Dragonscale Blade,0,0,0,12,20,0,20,0
+⚔️ Espada Curta,Erdsteel Dagger,0,0,0,7,12,0,14,0
+🏹 Arco,Erdtree Bow,0,0,0,8,12,0,14,0
+🛡️ Escudo,Erdtree Greatshield,0,0,0,30,12,0,14,0
+🙏🏻 Milagre,Erdtree Heal,0,0,0,0,0,0,42,0
 Catalisador,Erdtree Seal,0,0,0,0,0,0,40,0
 Catalisador,Finger Seal,0,0,0,4,0,0,10,0
-Escudo,Fingerprint Stone Shield,0,0,0,48,0,0,0,0
-Milagre,"Flame, Grant Me Strength",0,0,0,0,0,0,15,0
-Besta,Full Moon Crossbow,0,0,0,10,10,14,0,0
-Punho,Giant's Crusher,0,0,0,60,0,0,0,0
-Punho,Giant's Seal,0,0,0,4,0,0,14,0
-Feitiço,Carian Greatsword,0,0,0,0,0,24,0,0
-Cajado,Glintstone Staff,0,0,0,6,0,14,0,0
+🛡️ Escudo,Fingerprint Stone Shield,0,0,0,48,0,0,0,0
+🙏🏻 Milagre,"Flame, Grant Me Strength",0,0,0,0,0,0,15,0
+🏹 Besta,Full Moon Crossbow,0,0,0,10,10,14,0,0
+🤜🏻 Punho,Giant's Crusher,0,0,0,60,0,0,0,0
+🤜🏻 Punho,Giant's Seal,0,0,0,4,0,0,14,0
+🧙🏻 Feitiço,Carian Greatsword,0,0,0,0,0,24,0,0
+🪄 Cajado,Glintstone Staff,0,0,0,6,0,14,0,0
 Catalisador,Godslayer's Seal,0,0,0,4,0,0,27,0
 Catalisador,Golden Order Seal,0,0,0,17,0,0,17,0
-Foice,Grave Scythe,0,0,0,17,13,0,0,0
-Arco,Greatbow,0,0,0,20,20,0,0,0
-Espada Colossal,Greatsword,0,0,0,31,12,0,0,0
-Foice,Halo Scythe,0,0,0,13,16,0,15,0
-Katana,Hand of Malenia,0,0,0,16,48,0,0,0
-Besta,Heavy Crossbow,0,0,0,12,8,0,0,0
+⛏️  Foice,Grave Scythe,0,0,0,17,13,0,0,0
+🏹 Arco,Greatbow,0,0,0,20,20,0,0,0
+⚔️ Espada Colossal,Greatsword,0,0,0,31,12,0,0,0
+⛏️  Foice,Halo Scythe,0,0,0,13,16,0,15,0
+⚔️ Katana,Hand of Malenia,0,0,0,16,48,0,0,0
+🏹 Besta,Heavy Crossbow,0,0,0,12,8,0,0,0
 Garra,Hookclaws,0,0,0,8,14,0,0,0
-Arco,Horn Bow,0,0,0,10,14,12,0,0
-Lança,Inquisitor’s Girandole,0,0,0,16,16,0,24,0
-Escudo,Inverted Hawk Heater Shield,0,0,0,10,0,0,0,0
-Punho,Iron Ball,0,0,0,15,7,0,0,0
-Escudo,Jellyfish Shield,0,0,0,20,14,0,0,0
-Punho,Katar,0,0,0,8,10,0,0,0
-Milagre,Law of Regression,0,0,0,0,0,37,0,0
-Besta,Light Crossbow,0,0,0,8,10,0,0,0
-Milagre,Lightning Spear,0,0,0,0,0,0,17,0
-Arco,Longbow,0,0,0,9,14,0,0,0
-Milagre,Lord’s Heal,0,0,0,0,0,0,20,0
-Feitiço,Comet Azur,0,0,0,0,0,60,0,0
-Cajado,Lusat's Glintstone Staff,0,0,0,10,0,52,0,0
+🏹 Arco,Horn Bow,0,0,0,10,14,12,0,0
+✏️ Lança,Inquisitor’s Girandole,0,0,0,16,16,0,24,0
+🛡️ Escudo,Inverted Hawk Heater Shield,0,0,0,10,0,0,0,0
+🤜🏻 Punho,Iron Ball,0,0,0,15,7,0,0,0
+🛡️ Escudo,Jellyfish Shield,0,0,0,20,14,0,0,0
+🤜🏻 Punho,Katar,0,0,0,8,10,0,0,0
+🙏🏻 Milagre,Law of Regression,0,0,0,0,0,37,0,0
+🏹 Besta,Light Crossbow,0,0,0,8,10,0,0,0
+🙏🏻 Milagre,Lightning Spear,0,0,0,0,0,0,17,0
+🏹 Arco,Longbow,0,0,0,9,14,0,0,0
+🙏🏻 Milagre,Lord’s Heal,0,0,0,0,0,0,20,0
+🧙🏻 Feitiço,Comet Azur,0,0,0,0,0,60,0,0
+🪄 Cajado,Lusat's Glintstone Staff,0,0,0,10,0,52,0,0
 Catalisador,Lusat's Glintstone Staff,0,0,0,10,0,52,0,0
-Feitiço,Death Lightning,0,0,0,0,0,47,0,0
-Katana,Meteoric Ore Blade,0,0,0,15,14,18,0,0
-Adaga,Misericorde,0,0,0,7,12,0,0,0
-Katana,Moonveil,0,0,0,12,18,23,0,0
-Katana,Nagakiba,0,0,0,18,22,0,0,0
-Feitiço,Explosive Ghostflame,0,0,0,0,0,42,0,30
-Espada Curta,Noble's Estoc,0,0,0,10,12,0,0,0
-Foice,Obsidian Lamina,0,0,0,12,25,0,0,17
-Adaga,Parrying Dagger,0,0,0,5,13,0,0,0
-Lança,Partisan,0,0,0,15,12,0,0,0
-Cajado,Prince of Death's Staff,0,0,0,6,0,6,18,0
-Besta,Pulley Crossbow,0,0,0,16,16,0,0,0
-Feitiço,Fia's Mist,0,0,0,0,0,18,0,15
+🧙🏻 Feitiço,Death Lightning,0,0,0,0,0,47,0,0
+⚔️ Katana,Meteoric Ore Blade,0,0,0,15,14,18,0,0
+🔪 Adaga,Misericorde,0,0,0,7,12,0,0,0
+⚔️ Katana,Moonveil,0,0,0,12,18,23,0,0
+⚔️ Katana,Nagakiba,0,0,0,18,22,0,0,0
+🧙🏻 Feitiço,Explosive Ghostflame,0,0,0,0,0,42,0,30
+⚔️ Espada Curta,Noble's Estoc,0,0,0,10,12,0,0,0
+⛏️  Foice,Obsidian Lamina,0,0,0,12,25,0,0,17
+🔪 Adaga,Parrying Dagger,0,0,0,5,13,0,0,0
+✏️ Lança,Partisan,0,0,0,15,12,0,0,0
+🪄 Cajado,Prince of Death's Staff,0,0,0,6,0,6,18,0
+🏹 Besta,Pulley Crossbow,0,0,0,16,16,0,0,0
+🧙🏻 Feitiço,Fia's Mist,0,0,0,0,0,18,0,15
 Garra,Raptor Talons,0,0,0,6,14,0,0,0
-Adaga,Reduvia,0,0,0,5,13,0,0,13
-Espada Curta,Regalia of Eochaid,0,0,0,12,18,0,0,15
-Katana,Rivers of Blood,0,0,0,12,18,0,0,20
-Feitiço,Glintstone Pebble,0,0,0,0,0,10,0,0
-Espada Colossal,Royal Greatsword,0,0,0,26,18,0,0,0
-Espada Colossal,Ruins Greatsword,0,0,0,50,16,0,0,0
-Adaga,Scorpion's Stinger,0,0,0,6,12,0,0,0
-Foice,Scythe,0,0,0,14,14,0,0,0
-Lança,Serpent-Hunter,0,0,0,0,0,0,0,0
-Katana,Serpentbone Blade,0,0,0,11,22,0,0,0
-Escudo,Shield of the Guilty,0,0,0,8,0,0,0,0
-Lança,Short Spear,0,0,0,10,10,0,0,0
-Espada Curta,Short Sword,0,0,0,8,10,0,0,0
-Lança,Spear,0,0,0,14,15,0,0,0
-Punho,Spiked Caestus,0,0,0,8,10,0,0,0
-Cajado,Staff of Loss,0,0,0,6,0,12,0,0
-Cajado,Staff of the Guilty,0,0,0,4,0,12,0,0
-Punho,Star Fist,0,0,0,12,8,0,0,0
-Feitiço,Loretta's Greatbow,0,0,0,0,0,26,0,0
-Espada Colossal,Starscourge Greatswords,0,0,0,38,12,0,15,0
-Espada Curta,Sword of Night and Flame,0,0,0,12,12,24,24,0
-Espada Curta,Sword of St Trina,0,0,0,10,12,14,0,0
-Espada Colossal,Troll's Golden Sword,0,0,0,29,10,0,0,0
-Katana,Uchigatana,0,0,0,11,15,0,0,0
-Milagre,Urgent Heal,0,0,0,0,0,0,8,0
+🔪 Adaga,Reduvia,0,0,0,5,13,0,0,13
+⚔️ Espada Curta,Regalia of Eochaid,0,0,0,12,18,0,0,15
+⚔️ Katana,Rivers of Blood,0,0,0,12,18,0,0,20
+🧙🏻 Feitiço,Glintstone Pebble,0,0,0,0,0,10,0,0
+⚔️ Espada Colossal,Royal Greatsword,0,0,0,26,18,0,0,0
+⚔️ Espada Colossal,Ruins Greatsword,0,0,0,50,16,0,0,0
+🔪 Adaga,Scorpion's Stinger,0,0,0,6,12,0,0,0
+⛏️  Foice,Scythe,0,0,0,14,14,0,0,0
+✏️ Lança,Serpent-Hunter,0,0,0,0,0,0,0,0
+⚔️ Katana,Serpentbone Blade,0,0,0,11,22,0,0,0
+🛡️ Escudo,Shield of the Guilty,0,0,0,8,0,0,0,0
+✏️ Lança,Short Spear,0,0,0,10,10,0,0,0
+⚔️ Espada Curta,Short Sword,0,0,0,8,10,0,0,0
+✏️ Lança,Spear,0,0,0,14,15,0,0,0
+🤜🏻 Punho,Spiked Caestus,0,0,0,8,10,0,0,0
+🪄 Cajado,Staff of Loss,0,0,0,6,0,12,0,0
+🪄 Cajado,Staff of the Guilty,0,0,0,4,0,12,0,0
+🤜🏻 Punho,Star Fist,0,0,0,12,8,0,0,0
+🧙🏻 Feitiço,Loretta's Greatbow,0,0,0,0,0,26,0,0
+⚔️ Espada Colossal,Starscourge Greatswords,0,0,0,38,12,0,15,0
+⚔️ Espada Curta,Sword of Night and Flame,0,0,0,12,12,24,24,0
+⚔️ Espada Curta,Sword of St Trina,0,0,0,10,12,14,0,0
+⚔️ Espada Colossal,Troll's Golden Sword,0,0,0,29,10,0,0,0
+⚔️ Katana,Uchigatana,0,0,0,11,15,0,0,0
+🙏🏻 Milagre,Urgent Heal,0,0,0,0,0,0,8,0
 Garra,Venomous Fang,0,0,0,9,17,0,0,0
-Punho,Veteran's Prosthesis,0,0,0,15,12,0,0,0
-Espada Colossal,Watchdog's Greatsword,0,0,0,30,10,0,0,0
-Foice,Winged Scythe,0,0,0,16,16,0,0,24
-Feitiço,Magic Glintblade,0,0,0,0,0,14,0,0
-Espada Colossal,Zweihander,0,0,0,19,11,0,0,0
-Punho,Clinging Bone,0,0,0,8,22,0,0,16
-Feitiço,Night Comet,0,0,0,0,0,38,0,0
-Feitiço,Rancorcall,0,0,0,0,0,16,0,0
-Feitiço,Ranni's Dark Moon,0,0,0,0,0,68,0,0
-Feitiço,Rock Sling,0,0,0,0,0,18,0,0
-Feitiço,Stars of Ruin,0,0,0,0,0,43,0,0
-Feitiço,Tibia's Summons,0,0,0,0,0,28,0,20
-Feitiço,Zamor Ice Storm,0,0,0,0,0,36,0,0
-Adaga,Ivory Sickle,0,0,0,6,9,0,0,13
+🤜🏻 Punho,Veteran's Prosthesis,0,0,0,15,12,0,0,0
+⚔️ Espada Colossal,Watchdog's Greatsword,0,0,0,30,10,0,0,0
+⛏️  Foice,Winged Scythe,0,0,0,16,16,0,0,24
+🧙🏻 Feitiço,Magic Glintblade,0,0,0,0,0,14,0,0
+⚔️ Espada Colossal,Zweihander,0,0,0,19,11,0,0,0
+🤜🏻 Punho,Clinging Bone,0,0,0,8,22,0,0,16
+🧙🏻 Feitiço,Night Comet,0,0,0,0,0,38,0,0
+🧙🏻 Feitiço,Rancorcall,0,0,0,0,0,16,0,0
+🧙🏻 Feitiço,Ranni's Dark Moon,0,0,0,0,0,68,0,0
+🧙🏻 Feitiço,Rock Sling,0,0,0,0,0,18,0,0
+🧙🏻 Feitiço,Stars of Ruin,0,0,0,0,0,43,0,0
+🧙🏻 Feitiço,Tibia's Summons,0,0,0,0,0,28,0,20
+🧙🏻 Feitiço,Zamor Ice Storm,0,0,0,0,0,36,0,0
+🔪 Adaga,Ivory Sickle,0,0,0,6,9,0,0,13
+🙏🏻 Milagre,Blessing of the Erdtree,0,0,0,0,0,0,38,0
+🙏🏻 Milagre,Beast Claw,0,0,0,0,0,0,8,0
+🙏🏻 Milagre,"Flame, Grant Me Strength",0,0,0,0,0,0,15,0
+🙏🏻 Milagre,Bestial Sling,0,0,0,0,0,0,10,0
+🙏🏻 Milagre,Lord’s Heal,0,0,0,0,0,0,20,0
+🙏🏻 Milagre,Urgent Heal,0,0,0,0,0,0,8,0
+🙏🏻 Milagre,Lightning Spear,0,0,0,0,0,0,17,0
+🙏🏻 Milagre,Dragonfire,0,0,0,0,0,0,15,12
+🙏🏻 Milagre,Black Flame,0,0,0,0,0,0,20,0
+🙏🏻 Milagre,Erdtree Heal,0,0,0,0,0,0,42,0
+🙏🏻 Milagre,Law of Regression,0,0,0,0,0,37,0,0
