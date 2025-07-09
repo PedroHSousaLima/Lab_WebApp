@@ -1,15 +1,20 @@
-import streamlit as st
-import pandas as pd
-import sqlite3
 import os
 import sys
-import matplotlib.pyplot as plt
-import plotly.express as px
-import plotly.graph_objects as go
-from matplotlib import cm
-import matplotlib.colors as mcolors
+import sqlite3
 import base64
 from pathlib import Path
+
+import pandas as pd
+import streamlit as st
+
+# Visualização
+import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+from matplotlib import cm
+
+import plotly.express as px
+import plotly.graph_objects as go
+
 
 
 # === Caminhos ===
