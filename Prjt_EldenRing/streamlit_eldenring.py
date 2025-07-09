@@ -1,4 +1,8 @@
 import streamlit as st
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), 'Dados'))
+
 from db_seguranca import criar_tabela_usuarios, autenticar_usuario, cadastrar_usuario
 
 # === Inicializa a tabela de usuários ===
@@ -80,4 +84,4 @@ else:
         st.session_state['usuario'] = None
         st.session_state['usuario_logado'] = None
         st.success("Você saiu do sistema. Até logo, Maculado(a)!")
-        st.rerun()
+        st.rerun()  # Recarrega a página para voltar à tela de login
