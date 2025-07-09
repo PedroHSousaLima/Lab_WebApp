@@ -1,10 +1,10 @@
-# db_build.py
-
 import sqlite3
 from pathlib import Path
 
+# === Caminho do banco de dados ===
 DB_PATH = Path(__file__).resolve().parent / "dados.db"
 
+# === Criação da Tabela de Builds ===
 def criar_tabela_build():
     with sqlite3.connect(DB_PATH) as conn:
         cursor = conn.cursor()
@@ -24,6 +24,7 @@ def criar_tabela_build():
         """)
         conn.commit()
 
+# === Inicializa Build de um Personagem (se ainda não existir) ===
 def inicializar_build_para_personagem(personagem: str):
     with sqlite3.connect(DB_PATH) as conn:
         cursor = conn.cursor()
@@ -37,14 +38,17 @@ def inicializar_build_para_personagem(personagem: str):
             """, (personagem,))
             conn.commit()
 
+# === Obtem os valores da Build de um personagem ===
 def obter_build(personagem: str):
     with sqlite3.connect(DB_PATH) as conn:
         return conn.execute("""
             SELECT vigor, mind, endurance, strength, dexterity,
                    intelligence, faith, arcane
-            FROM build WHERE personagem = ?
+            FROM build
+            WHERE personagem = ?
         """, (personagem,)).fetchone()
 
+# === Atualiza os valores da Build ===
 def atualizar_build(personagem: str, valores: dict):
     with sqlite3.connect(DB_PATH) as conn:
         cursor = conn.cursor()

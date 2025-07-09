@@ -112,6 +112,15 @@ def obter_total_bosses_distintos():
 
 # === Interface Streamlit ===
 st.title("🧭 Jornada do Personagem")
+st.text('''
+🧭 Jornada do Personagem: Acompanhe Sua Lenda em Tempo Real
+
+Aqui é onde sua história em Elden Ring ganha forma e memória. A página Jornada do Personagem foi criada para que você acompanhe de perto o seu progresso no jogo — quais chefes já derrotou, quais áreas explorou e qual o status atual da sua aventura.
+
+Mas não para por aí: compare sua jornada com outros personagens que você criou ou com builds diferentes que está testando. Descubra quais estilos de jogo funcionam melhor para cada situação, veja o que falta conquistar e transforme sua experiência em algo estratégico e recompensador.
+
+🌟 Seja um mago imbatível, um guerreiro imortal ou algo entre os dois — aqui você vê tudo isso acontecer, passo a passo.        
+        ''')
 
 jogadores_df = obter_jogadores()
 personagens = jogadores_df["nome_personagem"].tolist()
