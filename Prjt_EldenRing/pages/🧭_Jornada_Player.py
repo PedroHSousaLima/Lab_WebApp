@@ -24,7 +24,7 @@ if 'autenticado' not in st.session_state:
 if not st.session_state['autenticado']:
     st.warning("⚠️ Você precisa fazer login para acessar esta página.")
     st.info("Por favor, retorne à página inicial para fazer login.")
-    st.stop() # Interrompe a execução do resto do script da página
+    st.stop()  # Interrompe a execução do resto do script da página
 # --- Fim da Lógica de Controle de Acesso ---
 
 # === Caminhos ===
@@ -79,9 +79,19 @@ def sincronizar_jornada_com_bosses():
             ))
         conn.commit()
 
-def obter_jogadores():
+def obter_jogadores(nome_usuario_logado):
+    """Obtém os jogadores (personagens) associados ao usuário logado filtrado por nome_usuario."""
     with sqlite3.connect(DB_PATH) as conn:
-        return pd.read_sql_query("SELECT id, nome_jogador, nome_personagem FROM jogadores_personagens", conn)
+        # Realiza a junção entre as tabelas 'user_jogador' e 'jogadores_personagens'
+        query = """
+            SELECT jp.id, jp.nome_jogador, jp.nome_personagem
+            FROM jogadores_personagens jp
+            JOIN user_jogador uj ON jp.nome_usuario_criador = uj.nome_usuario
+            WHERE uj.nome_usuario = ?
+        """
+        # Retorna os jogadores filtrados pelo nome_usuario_logado
+        return pd.read_sql_query(query, conn, params=(nome_usuario_logado,))
+
 
 def obter_bosses_com_level():
     with sqlite3.connect(DB_PATH) as conn:
@@ -165,9 +175,18 @@ Aqui é onde sua história em Elden Ring ganha forma e memória. A página Jorna
 Mas não para por aí: compare sua jornada com outros personagens que você criou ou com builds diferentes que está testando. Descubra quais estilos de jogo funcionam melhor para cada situação, veja o que falta conquistar e transforme sua experiência em algo estratégico e recompensador.
 
 🌟 Seja um mago imbatível, um guerreiro imortal ou algo entre os dois — aqui você vê tudo isso acontecer, passo a passo.        
-        ''')
+''')
 
-jogadores_df = obter_jogadores()
+# Obtém o nome do usuário logado do session_state
+nome_usuario_logado = st.session_state.get('usuario_logado', None)
+
+# Se o nome do usuário logado não estiver no session_state, impede a execução
+if nome_usuario_logado is None:
+    st.warning("⚠️ Usuário não logado. Por favor, faça login para acessar a jornada.")
+    st.stop()
+
+# Chama a função para obter os jogadores do usuário logado
+jogadores_df = obter_jogadores(nome_usuario_logado)
 personagens = jogadores_df["nome_personagem"].tolist()
 
 if not personagens:
@@ -180,7 +199,6 @@ else:
         df_bosses_lvl = obter_bosses_com_level()
         criar_ou_atualizar_jornada(personagem_escolhido, df_bosses_lvl)
         st.success(f"Jornada ativa para: {personagem_escolhido}")
-
 
         # === Métricas ===
         col1, col2, col3 = st.columns(3)
@@ -222,6 +240,9 @@ else:
             # Extrai prefixo numérico do nível para ordenação
             pivot_df["level_ord"] = pivot_df["level"].str.extract(r"^(\d{2})").astype(float)
             pivot_df = pivot_df.sort_values(by="level_ord", ascending=False, na_position="last")
+
+        # Gráficos e visualizações (continua igual...)
+
 
 
         # Altura proporcional ao número de níveis (mesmo para o gráfico de rosca)
