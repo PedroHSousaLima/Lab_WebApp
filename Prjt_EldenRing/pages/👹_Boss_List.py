@@ -19,10 +19,17 @@ if not st.session_state['autenticado']:
 
 # === Adiciona caminho do módulo db_boss.py ===
 caminho_atual = Path(__file__).resolve().parent
-CAMINHO_DADOS = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'Dados'))
-if CAMINHO_DADOS not in sys.path:
-    sys.path.append(CAMINHO_DADOS)
+streamlit_data_dir = os.path.join(os.path.expanduser("~"), "streamlit_data")
 
+# Verifica se a pasta para persistência dos dados existe, se não, cria
+if not os.path.exists(streamlit_data_dir):
+    os.makedirs(streamlit_data_dir)
+
+DB_PATH = os.path.join(streamlit_data_dir, "dados.db")
+if DB_PATH not in sys.path:
+    sys.path.append(DB_PATH)
+
+# Importação de funções de banco de dados
 from db_boss import criar_tabela_boss, listar_bosses, atualizar_boss
 
 # === Inicializa banco e tabela ===
