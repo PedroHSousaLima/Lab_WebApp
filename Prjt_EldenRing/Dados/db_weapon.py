@@ -1,11 +1,18 @@
 import pandas as pd
 import sqlite3
 from pathlib import Path
+import os
 
 # === Caminhos relativos ===
 BASE_DIR = Path(__file__).resolve().parent
+DB_DIR = BASE_DIR / 'streamlit_data'
+
+# Cria a pasta 'streamlit_data' caso ela não exista
+os.makedirs(DB_DIR, exist_ok=True)
+
+# Caminho do banco de dados
+DB_PATH = DB_DIR / "dados.db"
 CSV_PATH = BASE_DIR / "elden_ring_weapon.csv"
-DB_PATH = BASE_DIR / "dados.db"
 
 def criar_tabela_weapons():
     """Cria e popula a tabela 'weapons' no banco de dados com nova estrutura simplificada."""
