@@ -1,9 +1,19 @@
 import streamlit as st
 import sys
 import os
-sys.path.append(os.path.join(os.path.dirname(__file__), 'Dados'))
-
+from pathlib import Path
 from db_seguranca import criar_tabela_usuarios, autenticar_usuario, cadastrar_usuario
+
+# Verifica se a pasta de dados persistentes existe
+streamlit_data_dir = os.path.join(os.path.expanduser("~"), "streamlit_data")
+if not os.path.exists(streamlit_data_dir):
+    os.makedirs(streamlit_data_dir)
+
+# Caminho para o banco de dados persistente
+DB_PATH = os.path.join(streamlit_data_dir, "dados.db")
+
+# Adiciona o caminho do banco de dados ao sys.path
+sys.path.append(os.path.dirname(DB_PATH))
 
 # === Inicializa a tabela de usuários ===
 criar_tabela_usuarios()
