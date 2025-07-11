@@ -2,7 +2,7 @@ import streamlit as st
 import sys
 import os
 from pathlib import Path
-from db_seguranca import criar_tabela_usuarios, autenticar_usuario, cadastrar_usuario
+from Dados.db_seguranca import criar_tabela_usuarios, autenticar_usuario, cadastrar_usuario
 
 # Verifica se a pasta de dados persistentes existe
 streamlit_data_dir = os.path.join(os.path.expanduser("~"), "streamlit_data")
