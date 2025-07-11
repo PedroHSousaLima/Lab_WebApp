@@ -5,6 +5,13 @@ import base64
 import pandas as pd
 from pathlib import Path
 
+# Caminho do banco de dados persistente
+DB_PATH = os.path.join(os.path.expanduser("~"), "streamlit_data", "dados.db")
+
+# Cria a pasta de dados, caso não exista
+if not os.path.exists(os.path.dirname(DB_PATH)):
+    os.makedirs(os.path.dirname(DB_PATH))
+
 # Verifica se o usuário está autenticado e tem login válido
 if 'autenticado' not in st.session_state:
     st.session_state['autenticado'] = False
@@ -15,7 +22,6 @@ if not st.session_state['autenticado'] or not st.session_state['usuario_logado']
     st.warning("⚠️ Você precisa fazer login para acessar esta página.")
     st.info("Por favor, retorne à página inicial para fazer login.")
     st.stop()
-
 
 # === Caminhos Absolutos ===
 # Garante compatibilidade multiplataforma e ao mover para produção
@@ -84,7 +90,6 @@ with st.form("form_cadastro"):
         else:
             st.warning("Preencha todos os campos.")
 
-
 # === Interface de edição agrupada ===
 with st.expander("🛠 Clique aqui para editar ou excluir um jogador"):
     dados_finais = listar_jogadores(st.session_state['usuario_logado'])
@@ -114,12 +119,10 @@ with st.expander("🛠 Clique aqui para editar ou excluir um jogador"):
                     st.success("Alterações salvas com sucesso.")
                     st.rerun()
 
-
                 if excluir:
                     excluir_jogador(id_jogador, st.session_state['usuario_logado'])
                     st.success("Jogador excluído com sucesso.")
                     st.rerun()
-
 
 # === Visualização geral atualizada ===
 st.subheader("📊 Visualização Geral da Tabela")
