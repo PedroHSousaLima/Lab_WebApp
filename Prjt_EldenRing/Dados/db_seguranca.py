@@ -1,16 +1,10 @@
+# db_seguranca.py
 import sqlite3
 import os
 import hashlib
-from pathlib import Path
 
-# Caminho do banco de dados na pasta 'streamlit_data'
-BASE_DIR = Path(__file__).resolve().parent
-DB_DIR = BASE_DIR / 'streamlit_data'
-
-# Cria a pasta 'streamlit_data' se não existir
-os.makedirs(DB_DIR, exist_ok=True)
-
-DB_PATH = DB_DIR / 'dados.db'
+# Caminho do banco de dados
+DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "dados.db")
 
 # === Criação da Tabela ===
 def criar_tabela_usuarios():

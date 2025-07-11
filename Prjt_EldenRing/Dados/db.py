@@ -1,112 +1,84 @@
 import sqlite3
 import os
-import hashlib
 
-# Caminho fixo para garantir persistência do banco de dados
-DB_PATH = os.path.join(os.path.expanduser("~"), "streamlit_data", "dados.db")
+# Caminho do banco de dados
+DB_PATH = os.path.join(os.path.dirname(__file__), "dados.db")
 
-# Garante que o diretório para persistência do banco de dados exista
-os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
-
-# === Criação da Tabela ===
 def criar_tabela():
-    """Cria a tabela jogadores_personagens, se não existir, com controle por nome de usuário."""
-    try:
-        with sqlite3.connect(DB_PATH) as conn:
-            cursor = conn.cursor()
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS jogadores_personagens (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    nome_jogador TEXT NOT NULL,
-                    nome_personagem TEXT NOT NULL,
-                    nome_usuario_criador TEXT NOT NULL
-                )
-            """)
-            # Adiciona a coluna nome_usuario_criador caso não exista (evita falhas em bancos antigos)
-            try:
-                cursor.execute("ALTER TABLE jogadores_personagens ADD COLUMN nome_usuario_criador TEXT")
-                conn.commit()
-            except sqlite3.OperationalError as e:
-                if "duplicate column name" not in str(e):
-                    print(f"Erro ao adicionar coluna 'nome_usuario_criador': {e}")
-    except sqlite3.Error as e:
-        print(f"[ERRO] criar_tabela: {e}")
+    """
+    Cria a tabela jogadores_personagens, se não existir, com controle por nome de usuário.
+    """
+    with sqlite3.connect(DB_PATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS jogadores_personagens (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                nome_jogador TEXT NOT NULL,
+                nome_personagem TEXT NOT NULL,
+                nome_usuario_criador TEXT NOT NULL
+            )
+        """)
+        # Adiciona a coluna nome_usuario_criador caso não exista (evita falhas em bancos antigos)
+        try:
+            cursor.execute("ALTER TABLE jogadores_personagens ADD COLUMN nome_usuario_criador TEXT")
+            conn.commit()
+        except sqlite3.OperationalError as e:
+            if "duplicate column name" not in str(e):
+                print(f"Erro ao adicionar coluna 'nome_usuario_criador': {e}")
 
 # Inserir novo jogador
 def inserir_jogador(nome_jogador, nome_personagem, nome_usuario_criador):
-    """Insere um novo jogador na tabela."""
-    try:
-        with sqlite3.connect(DB_PATH) as conn:
-            cursor = conn.cursor()
-            cursor.execute("""
-                INSERT INTO jogadores_personagens (nome_jogador, nome_personagem, nome_usuario_criador)
-                VALUES (?, ?, ?)
-            """, (nome_jogador, nome_personagem, nome_usuario_criador))
-            conn.commit()
-    except sqlite3.Error as e:
-        print(f"[ERRO] inserir_jogador: {e}")
+    with sqlite3.connect(DB_PATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO jogadores_personagens (nome_jogador, nome_personagem, nome_usuario_criador)
+            VALUES (?, ?, ?)
+        """, (nome_jogador, nome_personagem, nome_usuario_criador))
+        conn.commit()
 
 # Listar jogadores apenas do usuário logado
 def listar_jogadores(nome_usuario_criador):
-    """Lista os jogadores criados por um usuário específico."""
-    try:
-        with sqlite3.connect(DB_PATH) as conn:
-            cursor = conn.cursor()
-            cursor.execute("""
-                SELECT id, nome_jogador, nome_personagem 
-                FROM jogadores_personagens 
-                WHERE nome_usuario_criador = ?
-            """, (nome_usuario_criador,))
-            return cursor.fetchall()
-    except sqlite3.Error as e:
-        print(f"[ERRO] listar_jogadores: {e}")
-        return []
+    with sqlite3.connect(DB_PATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT id, nome_jogador, nome_personagem 
+            FROM jogadores_personagens 
+            WHERE nome_usuario_criador = ?
+        """, (nome_usuario_criador,))
+        return cursor.fetchall()
 
 # Atualizar jogador
 def atualizar_jogador(id_jogador, novo_nome, novo_personagem, nome_usuario_criador):
-    """Atualiza os dados de um jogador no banco de dados."""
-    try:
-        with sqlite3.connect(DB_PATH) as conn:
-            cursor = conn.cursor()
-            cursor.execute("""
-                UPDATE jogadores_personagens
-                SET nome_jogador = ?, nome_personagem = ?
-                WHERE id = ? AND nome_usuario_criador = ?
-            """, (novo_nome, novo_personagem, id_jogador, nome_usuario_criador))
-            conn.commit()
-    except sqlite3.Error as e:
-        print(f"[ERRO] atualizar_jogador: {e}")
+    with sqlite3.connect(DB_PATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            UPDATE jogadores_personagens
+            SET nome_jogador = ?, nome_personagem = ?
+            WHERE id = ? AND nome_usuario_criador = ?
+        """, (novo_nome, novo_personagem, id_jogador, nome_usuario_criador))
+        conn.commit()
 
 # Excluir jogador
 def excluir_jogador(id_jogador, nome_usuario_criador):
-    """Exclui um jogador do banco de dados."""
-    try:
-        with sqlite3.connect(DB_PATH) as conn:
-            cursor = conn.cursor()
-            cursor.execute("""
-                DELETE FROM jogadores_personagens 
-                WHERE id = ? AND nome_usuario_criador = ?
-            """, (id_jogador, nome_usuario_criador))
-            conn.commit()
-    except sqlite3.Error as e:
-        print(f"[ERRO] excluir_jogador: {e}")
+    with sqlite3.connect(DB_PATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            DELETE FROM jogadores_personagens 
+            WHERE id = ? AND nome_usuario_criador = ?
+        """, (id_jogador, nome_usuario_criador))
+        conn.commit()
 
 # Obter personagens únicos do usuário
 def obter_personagens(nome_usuario_criador):
-    """Retorna uma lista de personagens únicos para um determinado usuário."""
-    try:
-        with sqlite3.connect(DB_PATH) as conn:
-            cursor = conn.cursor()
-            cursor.execute("""
-                SELECT DISTINCT nome_personagem 
-                FROM jogadores_personagens 
-                WHERE nome_usuario_criador = ?
-            """, (nome_usuario_criador,))
-            personagens = cursor.fetchall()
-            return [p[0] for p in personagens]
-    except sqlite3.Error as e:
-        print(f"[ERRO] obter_personagens: {e}")
-        return []
+    with sqlite3.connect(DB_PATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT DISTINCT nome_personagem 
+            FROM jogadores_personagens 
+            WHERE nome_usuario_criador = ?
+        """, (nome_usuario_criador,))
+        personagens = cursor.fetchall()
+        return [p[0] for p in personagens]
 
 # Testes locais
 if __name__ == "__main__":

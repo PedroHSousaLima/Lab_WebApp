@@ -30,16 +30,9 @@ if not st.session_state['autenticado']:
 # === Caminhos ===
 BASE_DIR = os.path.dirname(__file__)
 DADOS_PATH = os.path.abspath(os.path.join(BASE_DIR, '..', 'Dados'))
+DB_PATH = os.path.join(DADOS_PATH, 'dados.db')
 
-# Garante que a pasta streamlit_data seja criada se não existir
-streamlit_data_dir = os.path.join(os.path.expanduser("~"), "streamlit_data")
-if not os.path.exists(streamlit_data_dir):
-    os.makedirs(streamlit_data_dir)
-
-# Caminho para o banco de dados persistente
-DB_PATH = os.path.join(streamlit_data_dir, "dados.db")
-
-# Adiciona o caminho da pasta Dados ao sys.path
+# Garante que a pasta Dados seja visível para importações
 sys.path.append(DADOS_PATH)
 from db_boss_lvl import criar_tabela_boss_lvl, listar_boss_levels
 
@@ -47,38 +40,6 @@ from db_boss_lvl import criar_tabela_boss_lvl, listar_boss_levels
 criar_tabela_boss_lvl()
 
 # === Funções auxiliares ===
-
-def verificar_tabelas_e_dados():
-    with sqlite3.connect(DB_PATH) as conn:
-        # Verificar se a tabela 'jogadores_personagens' existe
-        query = "SELECT name FROM sqlite_master WHERE type='table' AND name='jogadores_personagens';"
-        tabela_jogadores = pd.read_sql_query(query, conn)
-        if tabela_jogadores.empty:
-            st.warning("⚠️ Tabela 'jogadores_personagens' não encontrada.")
-            return False
-
-        # Verificar se há jogadores cadastrados
-        query = "SELECT COUNT(*) FROM jogadores_personagens"
-        num_jogadores = pd.read_sql_query(query, conn).iloc[0, 0]
-        if num_jogadores == 0:
-            st.warning("⚠️ Nenhum personagem encontrado no banco de dados.")
-            return False
-
-        return True
-
-def obter_jogadores(nome_usuario_logado):
-    """Obtém os jogadores (personagens) associados ao usuário logado filtrado por nome_usuario."""
-    with sqlite3.connect(DB_PATH) as conn:
-        # Realiza a junção entre as tabelas 'user_jogador' e 'jogadores_personagens'
-        query = """
-            SELECT jp.id, jp.nome_jogador, jp.nome_personagem
-            FROM jogadores_personagens jp
-            JOIN user_jogador uj ON jp.nome_usuario_criador = uj.nome_usuario
-            WHERE uj.nome_usuario = ?
-        """
-        # Retorna os jogadores filtrados pelo nome_usuario_logado
-        return pd.read_sql_query(query, conn, params=(nome_usuario_logado,))
-
 def sincronizar_jornada_com_bosses():
     with sqlite3.connect(DB_PATH) as conn:
         jornada = pd.read_sql_query("SELECT * FROM jornada", conn)
@@ -117,6 +78,20 @@ def sincronizar_jornada_com_bosses():
                 row["resistencia"], row["id"]
             ))
         conn.commit()
+
+def obter_jogadores(nome_usuario_logado):
+    """Obtém os jogadores (personagens) associados ao usuário logado filtrado por nome_usuario."""
+    with sqlite3.connect(DB_PATH) as conn:
+        # Realiza a junção entre as tabelas 'user_jogador' e 'jogadores_personagens'
+        query = """
+            SELECT jp.id, jp.nome_jogador, jp.nome_personagem
+            FROM jogadores_personagens jp
+            JOIN user_jogador uj ON jp.nome_usuario_criador = uj.nome_usuario
+            WHERE uj.nome_usuario = ?
+        """
+        # Retorna os jogadores filtrados pelo nome_usuario_logado
+        return pd.read_sql_query(query, conn, params=(nome_usuario_logado,))
+
 
 def obter_bosses_com_level():
     with sqlite3.connect(DB_PATH) as conn:
@@ -192,7 +167,8 @@ set_bg_from_local("../assets/jrnd_background.jpg")
 
 # === Interface Streamlit ===
 st.title("🧭 Jornada do Personagem")
-st.text('''🧭 Jornada do Personagem: Acompanhe Sua Lenda em Tempo Real
+st.text('''
+🧭 Jornada do Personagem: Acompanhe Sua Lenda em Tempo Real
 
 Aqui é onde sua história em Elden Ring ganha forma e memória. A página Jornada do Personagem foi criada para que você acompanhe de perto o seu progresso no jogo — quais chefes já derrotou, quais áreas explorou e qual o status atual da sua aventura.
 
@@ -209,16 +185,8 @@ if nome_usuario_logado is None:
     st.warning("⚠️ Usuário não logado. Por favor, faça login para acessar a jornada.")
     st.stop()
 
-# Verifique as tabelas e dados antes de proceder
-if not verificar_tabelas_e_dados():
-    st.stop()  # Interrompe a execução se as tabelas ou dados estiverem ausentes
-
 # Chama a função para obter os jogadores do usuário logado
 jogadores_df = obter_jogadores(nome_usuario_logado)
-
-# Verifique os dados de jogadores
-st.write("Jogadores encontrados:", jogadores_df)  # Isso ajudará a verificar se a consulta retornou resultados
-
 personagens = jogadores_df["nome_personagem"].tolist()
 
 if not personagens:
@@ -249,8 +217,6 @@ else:
         col2.metric("😡 Bosses a sua espera", vivos)
         col3.metric("☠️ Bosses Exterminados", mortos)
 
-        # === Gráficos e visualizações ===
-        
         # === Preparação dos dados para o gráfico de barras ===
         with sqlite3.connect(DB_PATH) as conn:
             df_bar = pd.read_sql_query("""

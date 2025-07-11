@@ -1,41 +1,31 @@
 import sqlite3
-import pandas as pd
-import os
 from pathlib import Path
 
-# Caminho para o banco de dados persistente na pasta 'streamlit_data'
-BASE_DIR = Path(__file__).resolve().parent
-DB_DIR = BASE_DIR / 'streamlit_data'
-DB_PATH = DB_DIR / 'dados.db'
-
-# Cria a pasta 'streamlit_data' se não existir
-os.makedirs(DB_DIR, exist_ok=True)
+# Caminho para o banco de dados
+DB_PATH = Path(__file__).resolve().parent / "dados.db"
 
 def criar_tabela_jornada():
     """Cria a tabela 'jornada' no banco de dados caso não exista."""
-    try:
-        with sqlite3.connect(DB_PATH) as conn:
-            cursor = conn.cursor()
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS jornada (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    personagem TEXT,
-                    nome TEXT,
-                    localidade TEXT,
-                    location TEXT,
-                    runes INTEGER,
-                    loot TEXT,
-                    stance TEXT,
-                    tipo_dano_pref TEXT,
-                    resistencia TEXT,
-                    level TEXT,
-                    status_boss TEXT
-                )
-            """)
-            conn.commit()
-        print("✅ Tabela 'jornada' criada ou já existente.")
-    except Exception as e:
-        print(f"[ERRO] Falha ao criar tabela jornada: {e}")
+    with sqlite3.connect(DB_PATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS jornada (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                personagem TEXT,
+                nome TEXT,
+                localidade TEXT,
+                location TEXT,
+                runes INTEGER,
+                loot TEXT,
+                stance TEXT,
+                tipo_dano_pref TEXT,
+                resistencia TEXT,
+                level TEXT,
+                status_boss TEXT
+            )
+        """)
+        conn.commit()
+    print("✅ Tabela 'jornada' criada ou já existente.")
 
 def inserir_jogador(nome_jogador, nome_personagem, nome_usuario_criador):
     """Insere um novo jogador (personagem) na tabela 'jogadores_personagens'."""
@@ -141,7 +131,7 @@ def sincronizar_jornada_com_bosses():
     )
 
     # Reorganizar as colunas
-    atualizada = atualizada[[ 
+    atualizada = atualizada[[
         "id", "personagem", "nome", "localidade", "location",
         "runes", "loot", "stance", "tipo_dano_pref", "resistencia", "status_boss"
     ]]
